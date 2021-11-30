@@ -13,7 +13,6 @@ import com.example.githubpulls.viewModels.MainViewModel
 
 class PullFragment : Fragment() {
 
-
     private lateinit var binding: FragmentPullBinding
 
     private val mainViewModel: MainViewModel by activityViewModels()
