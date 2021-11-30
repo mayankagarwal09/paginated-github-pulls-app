@@ -2,13 +2,16 @@ package com.example.githubpulls.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.githubpulls.api.PullApi
+import com.example.githubpulls.api.PullApiService
 import com.example.githubpulls.models.Pull
 import com.example.githubpulls.utils.LinkParser
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class PullPagingSource : PagingSource<String, Pull>() {
+class PullPagingSource @Inject constructor(
+    private val pullApiService: PullApiService
+) : PagingSource<String, Pull>() {
 
     companion object {
         const val USER = "mozilla-mobile"
@@ -20,7 +23,7 @@ class PullPagingSource : PagingSource<String, Pull>() {
         return try {
             val pageUrl = params.key
             val response =
-                if (pageUrl != null) PullApi.retrofitService.getPullsFromLink(pageUrl) else PullApi.retrofitService.getAllPulls(
+                if (pageUrl != null) pullApiService.getPullsFromLink(pageUrl) else pullApiService.getAllPulls(
                     USER, REPO
                 )
             val pulls = response.body() ?: listOf()

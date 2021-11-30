@@ -10,6 +10,8 @@ import javax.inject.Inject
 
 class PullRepository @Inject constructor() {
 
+    @Inject
+    lateinit var pullPagingSource: PullPagingSource
 
     fun getPulls(): Flow<PagingData<Pull>> {
         return Pager(
@@ -17,7 +19,7 @@ class PullRepository @Inject constructor() {
                 pageSize = NETWORK_PAGE_SIZE,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { PullPagingSource() }
+            pagingSourceFactory = { pullPagingSource }
         ).flow
     }
 

@@ -10,20 +10,21 @@ import androidx.lifecycle.lifecycleScope
 import com.example.githubpulls.adapters.PullAdapter
 import com.example.githubpulls.adapters.PullLoadStateAdapter
 import com.example.githubpulls.databinding.FragmentPullBinding
-import com.example.githubpulls.repositories.PullRepository
 import com.example.githubpulls.viewModels.MainViewModel
-import com.example.githubpulls.viewModels.MainViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class PullFragment : Fragment() {
 
     private lateinit var binding: FragmentPullBinding
 
-    private val mainViewModel: MainViewModel by activityViewModels {
-        MainViewModelFactory(PullRepository())
-    }
+    @Inject
+    lateinit var pullAdapter: PullAdapter
+
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +33,6 @@ class PullFragment : Fragment() {
 
         binding = FragmentPullBinding.inflate(layoutInflater, container, false)
 
-        val pullAdapter = PullAdapter()
         binding.pullList.adapter = pullAdapter.withLoadStateHeaderAndFooter(
             header = PullLoadStateAdapter { pullAdapter.retry() },
             footer = PullLoadStateAdapter { pullAdapter.retry() }
