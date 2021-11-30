@@ -1,13 +1,27 @@
 package com.example.githubpulls.repositories
 
-import com.example.githubpulls.api.PullApiService
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.githubpulls.models.Pull
+import com.example.githubpulls.paging.PullPagingSource
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class PullRepository @Inject constructor(
-    private val pullService: PullApiService
-) {
-    suspend fun loadPulls(user: String, repo: String): List<Pull> {
-        return pullService.getPulls(user, repo)
+class PullRepository @Inject constructor() {
+
+
+    fun getPulls(): Flow<PagingData<Pull>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = NETWORK_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { PullPagingSource() }
+        ).flow
+    }
+
+    companion object {
+        const val NETWORK_PAGE_SIZE = 30
     }
 }

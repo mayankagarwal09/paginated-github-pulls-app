@@ -9,12 +9,12 @@ import retrofit2.http.Url
 interface PullApiService {
 
     @GET("repos/{user}/{repo}/pulls?state=closed")
-    suspend fun getPulls(
+    suspend fun getAllPulls(
         @Path(value = "user", encoded = true) user: String,
         @Path(value = "repo", encoded = true) repo: String
-    ): List<Pull>
+    ): Response<List<Pull>>
 
     @GET
-    suspend fun getPostsFromLink(@Url link: String): List<Pull>
+    suspend fun getPullsFromLink(@Url link: String): Response<List<Pull>>
 
 }

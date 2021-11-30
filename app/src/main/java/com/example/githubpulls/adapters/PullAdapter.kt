@@ -3,15 +3,15 @@ package com.example.githubpulls.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubpulls.databinding.PullItemRowBinding
 import com.example.githubpulls.models.Pull
 
 
 class PullAdapter :
-    ListAdapter<Pull, PullAdapter.PullViewHolder>(PullDiffUtil()) {
+    PagingDataAdapter<Pull, PullAdapter.PullViewHolder>(PullDiffUtil()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PullViewHolder {
@@ -27,7 +27,7 @@ class PullAdapter :
     class PullViewHolder private constructor(private val binding: PullItemRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(pull: Pull) {
+        fun bind(pull: Pull?) {
             binding.pull = pull
             binding.executePendingBindings()
         }
