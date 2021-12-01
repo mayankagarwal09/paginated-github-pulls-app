@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubpulls.databinding.PullItemRowBinding
 import com.example.githubpulls.models.Pull
+import javax.inject.Inject
 
 
-class PullAdapter :
+class PullAdapter @Inject constructor() :
     PagingDataAdapter<Pull, PullAdapter.PullViewHolder>(PullDiffUtil()) {
 
 

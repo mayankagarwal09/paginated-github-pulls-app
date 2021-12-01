@@ -8,21 +8,17 @@ import androidx.paging.cachedIn
 import com.example.githubpulls.models.Pull
 import com.example.githubpulls.repositories.PullRepository
 import kotlinx.coroutines.flow.Flow
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(private val pullRepository: PullRepository) : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val pullRepository: PullRepository
+) : ViewModel() {
 
     fun getPullList(): Flow<PagingData<Pull>> {
         return pullRepository.getPulls()
             .cachedIn(viewModelScope)
-    }
-}
-
-@Suppress("UNCHECKED_CAST")
-class MainViewModelFactory(private val pullRepository: PullRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(pullRepository) as T
-        }
-        throw IllegalArgumentException("Unknown class name")
     }
 }

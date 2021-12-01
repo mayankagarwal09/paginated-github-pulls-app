@@ -8,9 +8,11 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubpulls.databinding.PullLoadStateBinding
+import javax.inject.Inject
 
-class PullLoadStateAdapter(private val retryCallback: () -> Unit) :
-    LoadStateAdapter<PullLoadStateAdapter.LoadStateViewHolder>() {
+class PullLoadStateAdapter @Inject constructor(
+    private val retryCallback: () -> Unit
+) : LoadStateAdapter<PullLoadStateAdapter.LoadStateViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoadStateViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
